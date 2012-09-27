@@ -27,6 +27,7 @@ object Main {
       if (charList.isEmpty) isParenMatched
       else if (charList.head == '(') recurse(charList.tail, true, false)
       else if (charList.head == ')' && isParenOpen) recurse(charList.tail, false, true)
+      else if (charList.head == ')' && !isParenOpen) recurse(charList.tail, false, false)
       else recurse(charList.tail, isParenOpen, isParenMatched)
     }
     recurse(chars, false, false)
