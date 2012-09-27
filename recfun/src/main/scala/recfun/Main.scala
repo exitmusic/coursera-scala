@@ -24,15 +24,10 @@ object Main {
    */
   def balance(chars: List[Char]): Boolean = {
     def recurse(charList: List[Char], isParenOpen: Boolean, isParenMatched: Boolean): Boolean = {
-      if (charList.isEmpty) {
-        isParenMatched
-      } else if (charList.head == '(') {
-        recurse(charList.tail, true, false)
-      } else if (charList.head == ')' && isParenOpen) {
-        recurse(charList.tail, false, true)
-      } else {
-        recurse(charList.tail, isParenOpen, isParenMatched) 
-      }
+      if (charList.isEmpty) isParenMatched
+      else if (charList.head == '(') recurse(charList.tail, true, false)
+      else if (charList.head == ')' && isParenOpen) recurse(charList.tail, false, true)
+      else recurse(charList.tail, isParenOpen, isParenMatched)
     }
     recurse(chars, false, false)
   }
@@ -40,5 +35,10 @@ object Main {
   /**
    * Exercise 3
    */
-  def countChange(money: Int, coins: List[Int]): Int = ???
+  def countChange(money: Int, coins: List[Int]): Int = {
+      if (money == 0) 1
+      else if (money < 0) 0
+      else if (coins.isEmpty) 0
+      else countChange(money - coins.head, coins) + countChange(money, coins.tail)
+  }
 }
