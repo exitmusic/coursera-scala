@@ -23,14 +23,24 @@ object Main {
    * Exercise 2
    */
   def balance(chars: List[Char]): Boolean = {
-    def recurse(charList: List[Char], isParenOpen: Boolean, isParenMatched: Boolean): Boolean = {
-      if (charList.isEmpty) isParenMatched
-      else if (charList.head == '(') recurse(charList.tail, true, false)
-      else if (charList.head == ')' && isParenOpen) recurse(charList.tail, false, true)
-      else if (charList.head == ')' && !isParenOpen) recurse(charList.tail, false, false)
-      else recurse(charList.tail, isParenOpen, isParenMatched)
+    def recurse(chars: List[Char], opened: Int, isOpen: Boolean, isMatched: Boolean): Boolean = {
+      if (chars.isEmpty) {
+        isMatched
+      } else if (chars.head == '(') {
+        recurse(chars.tail, opened+1, true, false)
+      } else if (chars.head == ')') {
+        if (isOpen) {
+          if (opened == 0) recurse(chars.tail, opened, false, false)
+          else if (opened == 1) recurse(chars.tail, opened-1, false, true)
+          else recurse(chars.tail, opened-1, true, false)
+        } else {
+          recurse(chars.tail, opened, isOpen, false)
+        }
+      } else {
+        recurse(chars.tail, opened, isOpen, false)
+      }
     }
-    recurse(chars, false, false)
+    recurse(chars, 0, false, true)
   }
 
   /**
