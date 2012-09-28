@@ -24,8 +24,9 @@ object Main {
    */
   def balance(chars: List[Char]): Boolean = {
     def recurse(chars: List[Char], counter: Int): Boolean = {
-      if (chars.isEmpty && counter == 0) true
-      else if (counter < 0) false
+      if (counter < 0) false
+      else if (chars.isEmpty && counter == 0) true
+      else if (chars.isEmpty && counter > 0) false
       else if (chars.head == '(') recurse(chars.tail, counter+1)
       else if (chars.head == ')') recurse(chars.tail, counter-1)
       else recurse(chars.tail, counter) 
